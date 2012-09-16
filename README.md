@@ -1,4 +1,4 @@
 bizLogic
 ========
 
-An RoR to facilitate the capture and organisation of application logic
+An RoR app to facilitate both the capture of, and, the structuring of application logic
