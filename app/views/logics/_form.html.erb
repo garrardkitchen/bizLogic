@@ -1,0 +1,73 @@
+<%= form_for(@logic) do |f| %>
+  <% if @logic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@logic.errors.count, "error") %> prohibited this logic from being saved:</h2>
+
+      <ul>
+      <% @logic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :page_id %><br />
+    <%= f.collection_select(:page_id, @pages, :id, :name, :prompt => true) %>
+  </div>
+   
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, rows:6, cols:80, class:  "input-xxlarge" %>
+  </div>
+
+  <div style="overflow:auto;">
+    <div class="field" style="float:left;">
+      <%= f.label :code %><br />
+      <%= f.text_area :code, rows:10, cols:80, class:  "input-xxlarge" %>
+    </div>
+
+    <div style="float:left;padding-left: 20px;">
+      <%= f.label "preview" %><br />
+      <div style="width:600px; height:192px;">
+        <pre class="prettyprint linenums lang-yaml" style="width:100%;height:100%;" id="preview">
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" >
+    <%= f.label :user_id %><br />
+    <%= f.collection_select(:user_id, @users, :id, :full_name, :prompt => true) %>
+  </div>
+
+
+  <div class="actions">
+    <%= f.submit :class => 'btn' %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  
+  $('#logic_code').keypress(function(){
+    updatePreview()
+  })
+
+  $('#logic_code').blur(function(){
+    updatePreview()
+  })
+  
+  function updatePreview()
+  {
+    $('#preview').text($('#logic_code').val())
+    prettyPrint()
+  }
+  
+  updatePreview()  
+})
+
+
+</script>

@@ -1,0 +1,29 @@
+<h1>Listing pages</h1>
+
+<div style="padding:10px;">
+  <div class="well well-small">
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <% @pages.each do |page| %>
+          <tr>
+            <td><%= page.name %></td>
+            <td><%= page.description %></td>
+            <td><%= link_to 'Show', page, class: "btn" %></td>
+            <td><%= link_to 'Edit', edit_page_path(page), class: "btn" %></td>
+            <td><%= link_to 'Destroy', page, method: :delete, data: {confirm: 'Are you sure?'}, class: "btn" %></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<br/>
+
+<%= link_to 'New Page', new_page_path %>

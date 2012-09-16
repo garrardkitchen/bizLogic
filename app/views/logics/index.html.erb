@@ -1,0 +1,118 @@
+<h1>Listing logics</h1>
+
+<div style="padding:10px;">
+
+<input id="btn_reorder" type="button" class="btn" value="Reorder" />
+<input id="btn_cancel" type="button" class="btn" value="Cancel" style="visibility:hidden"/>
+<p/>
+
+<div class="well well-small">
+  <table class="table table-striped" id="tbl_grid">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Description</th>
+        <th>Code</th>
+        <th>User</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <% @logics.each do |logic| %>  
+    <tr>
+      <td style="width:30px;"><img src="<%= asset_path '/assets/up_down.png' %>" class="img_move" style="visibility:hidden"/> </td>
+      <td><%= truncate(logic.description, length: 50, separator: ' ') %></td>
+      <td><%= truncate(logic.code, length: 20, separator: ' ') %></td>
+      <td><%= logic.user.full_name if logic.user_id %></td>
+      <td><%= link_to 'Show', logic, class: "btn" %></td>
+      <td><%= link_to 'Edit', edit_logic_path(logic),  class: "btn" %></td>
+      <td><%= link_to 'Destroy', logic, method: :delete, data: { confirm: 'Are you sure?' },  class: "btn" %></td>
+    </tr>
+  <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br />
+
+<%= link_to 'New Logic', new_logic_path, class: "btn" %>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  
+  $('#btn_cancel').click(function(){
+    setSortButtons(false)
+    setSortIcons(false)
+  })
+
+  $('#btn_reorder').click(function(){
+    if ($('#btn_reorder').val() == "Reorder"){      
+      setSortButtons(true)    
+      setSortIcons(true)
+    } else {      
+      setSortButtons(false)    
+      setSortIcons(false)
+    }
+  })
+
+  function setSortIcons(enable){    
+    $('#tbl_grid .img_move').each(function (){              
+      if (enable){
+        $(this).css("visibility", "visible")                  
+      } else {
+        $(this).css("visibility", "hidden")          
+      }        
+    })
+
+     $('#tbl_grid .btn').each(function (){              
+      if (enable){
+        $(this).css("visibility", "hidden")                  
+      } else {
+        $(this).css("visibility", "visible")          
+      }        
+    })
+  }
+
+  function setSortButtons(enable){
+    var reorder = $('#btn_reorder');
+    var grid = $('#tbl_grid')
+    if (enable){      
+      reorder.val("Save")
+      $('#btn_cancel').css("visibility", "visible")      
+    } else {      
+      reorder.val("Reorder")
+      $('#btn_cancel').css("visibility", "hidden")      
+    }
+    setSortable(enable)    
+  }
+
+  var fixHelperModified = function(e, tr) {
+      var $originals = tr.children();
+      var $helper = tr.clone();
+      $helper.children().each(function(index)
+      {
+        $(this).width($originals.eq(index).width())
+      });
+      return $helper;
+  };
+
+  function setSortable(enable) {
+    if (enable) {
+      $('#tbl_grid tbody').sortable({
+        helper: fixHelperModified     
+      }).disableSelection()  
+
+    } else {
+      $('#tbl_grid tbody').sortable("destroy")
+
+    }
+  }
+  
+})
+
+
+</script>

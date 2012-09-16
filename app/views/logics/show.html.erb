@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Code</b>
+</p>
+
+
+<p>
+  <div style="padding: 20px;">
+    <pre class="prettyprint linenums lang-yaml" >
+<%= @logic.code %>
+    </pre>
+  </div>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @logic.description %>
+</p>
+
+<p>
+  <b>Logic order:</b>
+  <%= @logic.logic_order %>
+</p>
+
+<p>
+  <b>User:</b>
+  <a class="tooltip-test" title="Author" data-placement="top" rel="tooltip"><%= @logic.user.full_name if @logic.user_id %></a>
+</p>
+
+<p>
+  <b>Page</b>
+  <%= @logic.page.name if @logic.page_id %>
+</p>
+
+<script type="text/javascript">
+
+prettyPrint()
+$('.tooltip-test').tooltip()
+
+</script>
+
+<%= link_to 'Edit', edit_logic_path(@logic), class: "btn" %>
+<%= link_to 'Back', logics_path, class: "btn" %>

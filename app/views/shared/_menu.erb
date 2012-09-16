@@ -1,0 +1,15 @@
+<% if session[:nav] == "user" %>
+<li class="active"><%= link_to 'Users', users_path %></li>
+<% else %>
+<li><%= link_to 'Users', users_path %></li>
+<% end %>
+<% if session[:nav] == "page" %>
+<li class="active"><%= link_to 'Pages', pages_path %></li>
+<% else %>
+    <li><%= link_to 'Pages', pages_path %></li>
+<% end %>
+<% if session[:nav] == "logic" %>
+<li class="active"><%= link_to 'Logic', logics_path %></li>
+<% else %>
+    <li><%= link_to 'Logic', logics_path %></li>
+<% end %>
